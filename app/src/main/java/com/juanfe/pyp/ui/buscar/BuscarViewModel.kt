@@ -16,14 +16,17 @@ import java.sql.Date
 import java.time.Instant
 import java.util.*
 
+/**
+ * this viewmodel handles all the business logic
+ */
 class BuscarViewModel(var database: AppDatabase) : ViewModel() {
     var buscarListener: BuscarListener? = null
     var plate: String? = null
     val regexPlate = Regex("[a-zA-Z]{3}[0-9]{3}")
-
     val busquedas by lazyDeferred {
         getBusquedas()
     }
+    var filteredSearch = mutableListOf<Busqueda>()
 
     suspend fun getBusquedas(): LiveData<MutableList<Busqueda>> {
         return withContext(Dispatchers.IO){
@@ -43,22 +46,30 @@ class BuscarViewModel(var database: AppDatabase) : ViewModel() {
      * we check if the plate is right and if exists a contravention then we save the search for the log
      */
     fun buscar(view: View){
-        Log.e("viewmodel","entre")
+        //we clear our filtered search so we dont get duplicates
+        filteredSearch.clear()
+        //some validation
         if (plate.isNullOrEmpty() ){
             buscarListener!!.onError(R.string.campos_vacios)
         }else if(!plate!!.matches(regexPlate)){
             buscarListener!!.onError(R.string.campos_incorrectos)
         }else{
+            //we decide if there is a contravention
             var last = plate!!.takeLast(1)
             var contravention = false
-            if(Constants.PICOYPLACA[Calendar.getInstance().time.day].contains(last.toInt())){
+            if(Constants.PICOYPLACA[Calendar.getInstance().time.day-1].contains(last.toInt())){
                 contravention = true
             }
-            var busqueda = Busqueda(Calendar.getInstance().timeInMillis,plate!!.capitalize(),contravention)
+            var busqueda = Busqueda(Calendar.getInstance().timeInMillis,plate!!.toUpperCase(),contravention)
             Coroutines.io {
+                //we save the search also we update the view
                 saveBusquedas(listOf(busqueda))
-                Log.e("viewmodel",busqueda.toString())
-                buscarListener!!.onSucces(plate!!)
+                filteredSearch.add(busqueda)
+                var list = getBusquedasByPlate(busqueda.plate)
+                filteredSearch.addAll(list)
+                Coroutines.main{
+                    buscarListener!!.onSucces(plate!!)
+                }
             }
         }
     }

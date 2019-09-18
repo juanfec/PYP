@@ -9,7 +9,7 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
- * main and only activity of the project, i am are following the single activity pattern using the navigation graph and the navigation library
+ * main and only activity of the project, i am are following the single activity structure using the navigation graph and the navigation library
  */
 class MainActivity : AppCompatActivity() {
 

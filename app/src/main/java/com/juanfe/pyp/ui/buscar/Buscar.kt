@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.einvopos.e_invopos.utils.Coroutines
 
@@ -26,7 +27,6 @@ class Buscar : Fragment(), KodeinAware, BuscarListener {
     private lateinit var viewModel: BuscarViewModel
     private val factory : BuscarViewModelFactory by instance()
     lateinit var binding: BuscarFragmentBinding
-    private var busquedaList: MutableList<Busqueda> = mutableListOf()
     private lateinit var mAdapter: RecyclerViewBuscarAdapter
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class Buscar : Fragment(), KodeinAware, BuscarListener {
         viewModel = ViewModelProviders.of(this, factory).get(BuscarViewModel::class.java)
         viewModel.buscarListener=this
         binding.viewmodel = viewModel
-        initRecyclerView(busquedaList)
+        initRecyclerView(viewModel.filteredSearch)
 
     }
 
@@ -54,15 +54,18 @@ class Buscar : Fragment(), KodeinAware, BuscarListener {
     }
 
     override fun onSucces(plate : String) {
-        Log.e("asdf","asfd")
-        Coroutines.io{
-            busquedaList = viewModel.getBusquedasByPlate(plate)
-            Log.e("buscar", busquedaList.toString())
-            Coroutines.main {
-                mAdapter.notifyDataSetChanged()
-            }
-        }
+        mAdapter.notifyDataSetChanged()
     }
+
+/*    *//**
+     * we bind the ui with the data
+     *//*
+    fun bindUi() = Coroutines.main{
+        val liveBusquedas = viewModel.busquedas.await()
+        liveBusquedas.observe(this, Observer {
+            initRecyclerView(it)
+        })
+    }*/
 
     /**
      * we initialized the recyclerview

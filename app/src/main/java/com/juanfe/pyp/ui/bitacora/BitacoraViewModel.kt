@@ -9,6 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class BitacoraViewModel(var appDatabase: AppDatabase) : ViewModel() {
+    val busquedas by lazyDeferred {
+        getBusquedas()
+    }
 
-
+    suspend fun getBusquedas(): LiveData<MutableList<Busqueda>> {
+        return withContext(Dispatchers.IO){
+            appDatabase.getBusquedaDao().getBusquedas()
+        }
+    }
 }

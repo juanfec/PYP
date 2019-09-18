@@ -1,24 +1,20 @@
-package com.juanfe.pyp.ui.buscar
+package com.juanfe.pyp.ui.bitacora
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.einvopos.e_invopos.utils.Coroutines
 import com.juanfe.pyp.R
 import com.juanfe.pyp.data.models.Busqueda
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.buscar_item.view.*
-import java.time.format.DateTimeFormatter
-import java.util.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
  * basic adapter to work with the recycler view
  */
-class RecyclerViewBuscarAdapter(private val busquedas: List<Busqueda>) : RecyclerView.Adapter<RecyclerViewBuscarAdapter.ViewHolder>() {
+class RecyclerBitacoraAdapter(private val busquedas: List<Busqueda>) : RecyclerView.Adapter<RecyclerBitacoraAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view : View = LayoutInflater.from(parent.context).inflate(R.layout.buscar_item, parent, false)
@@ -49,4 +45,5 @@ class RecyclerViewBuscarAdapter(private val busquedas: List<Busqueda>) : Recycle
             }
         }
     }
+
 }
