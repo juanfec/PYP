@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/buscar">
+
+    <fragment
+        android:id="@+id/buscar"
+        android:name="com.juanfe.pyp.ui.buscar.Buscar"
+        tools:layout="@layout/buscar_fragment"
+        android:label="@string/buscar"/>
+    <fragment
+        android:id="@+id/bitacora"
+        android:name="com.juanfe.pyp.ui.bitacora.Bitacora"
+        android:label="@string/bitacora"
+        tools:layout="@layout/bitacora_fragment" />
+</navigation>
