@@ -17,11 +17,6 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
-
-
-
-
-
 /**
  * this viewmodel handles all the business logic
  */
