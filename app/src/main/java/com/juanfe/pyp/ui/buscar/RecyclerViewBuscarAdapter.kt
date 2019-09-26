@@ -33,6 +33,10 @@ class RecyclerViewBuscarAdapter(private val busquedas: List<Busqueda>) : Recycle
         holder.bind(busquedas[position])
     }
 
+    fun getContraventions(): Int {
+        return busquedas.filter { busqueda -> busqueda.contravention }.size
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(busqueda: Busqueda)= with(itemView) {
             placa_item.text = busqueda.plate
