@@ -12,12 +12,12 @@
 
         <TextView
             android:id="@+id/placa_item"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="AAA999"
+            android:text="5SAADS"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/fecha_item"
@@ -26,28 +26,16 @@
 
         <TextView
             android:id="@+id/fecha_item"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="12/12/2001"
+            android:layout_marginEnd="8dp"
+            android:maxLines="1"
+            android:text="@string/descripcion"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@+id/placa_item"
-            app:layout_constraintEnd_toStartOf="@+id/contravencion_item"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/placa_item"
             app:layout_constraintTop_toTopOf="@+id/placa_item" />
 
-        <TextView
-            android:id="@+id/contravencion_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="NO"
-            android:textColor="@color/colorPrimary"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/fecha_item"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/fecha_item"
-            app:layout_constraintTop_toTopOf="@+id/fecha_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

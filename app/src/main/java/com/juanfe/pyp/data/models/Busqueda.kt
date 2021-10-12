@@ -5,11 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "busqueda")
 data class Busqueda(
-    var date: Long,
     var plate: String,
-    var contravention: Boolean
+    var descripcion: String
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
-    constructor(): this(0,"",false)
+    constructor(): this("", "")
 }

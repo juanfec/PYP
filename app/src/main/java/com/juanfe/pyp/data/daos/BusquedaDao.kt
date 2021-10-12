@@ -18,4 +18,7 @@ interface BusquedaDao {
 
     @Query("SELECT * FROM busqueda WHERE plate = :plate")
     fun getBusquedasByPlate(plate: String): MutableList<Busqueda>
+
+    @Query("SELECT * FROM busqueda WHERE descripcion LIKE '%' || :description || '%'")
+    fun getBusquedasByDescription(description: String): MutableList<Busqueda>
 }

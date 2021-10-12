@@ -6,9 +6,13 @@
     <string name="placa">Placa</string>
     <string name="fecha">Fecha</string>
     <string name="campos_vacios">Los campos no pueden estar vacios o incorrectos</string>
-    <string name="campos_incorrectos">La placa debe seguir la estructura AAA999</string>
+    <string name="campos_incorrectos">Los valores ingresados deben ser numeros o letras</string>
     <string name="hint_placa">ABC123</string>
     <string name="contravencion">Contravencion</string>
     <string name="si">SI</string>
     <string name="no">NO</string>
+    <string name="codigo">Codigo</string>
+    <string name="descripcion">Descripción</string>
+    <string name="agregar">Agregar</string>
+    <string name="EditarBorrar">Editar/Borrar</string>
 </resources>

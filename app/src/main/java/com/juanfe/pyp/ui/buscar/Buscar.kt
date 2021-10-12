@@ -55,7 +55,7 @@ class Buscar : Fragment(), KodeinAware, BuscarListener {
 
     override fun onSucces(plate : String) {
         mAdapter.notifyDataSetChanged()
-        number_of_contraventions.text = mAdapter.getContraventions().toString()
+
     }
 
 /*    *//**

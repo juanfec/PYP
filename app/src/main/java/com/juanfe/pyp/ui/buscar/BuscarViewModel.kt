@@ -23,7 +23,8 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 class BuscarViewModel(var database: AppDatabase) : ViewModel() {
     var buscarListener: BuscarListener? = null
     var plate: String? = null
-    val regexPlate = Regex("[a-zA-Z]{3}[0-9]{3}")
+    var description: String? = null
+    val regexPlate = Regex("[A-Za-z0-9]+")
     val busquedas by lazyDeferred {
         getBusquedas()
     }
@@ -43,40 +44,61 @@ class BuscarViewModel(var database: AppDatabase) : ViewModel() {
         return database.getBusquedaDao().getBusquedasByPlate(plate)
     }
 
+    fun getBusquedaByDescription(description: String): MutableList<Busqueda> {
+        return database.getBusquedaDao().getBusquedasByDescription(description)
+    }
+
     /**
-     * we check if the plate is right and if exists a contravention then we save the search for the log
+     * we look for a code or a description
      */
     fun buscar(view: View){
         //we clear our filtered search so we dont get duplicates
         filteredSearch.clear()
         //some validation
-        if (plate.isNullOrEmpty() ){
+        if(plate.isNullOrEmpty()&&description.isNullOrEmpty()){
             buscarListener!!.onError(R.string.campos_vacios)
-        }else if(!plate!!.matches(regexPlate)){
-            buscarListener!!.onError(R.string.campos_incorrectos)
         }else{
-            //we get the date and create an instance
-            val date = Date()
-            val calendarInstance = Calendar.getInstance()
-            calendarInstance.time = date
-            val hour = calendarInstance.get(Calendar.HOUR_OF_DAY) * 100 + calendarInstance.get(Calendar.MINUTE)
-            //we get the intervals of hours
-            val desde1 = Constants.PICOYPLACAHORA[0]
-            val hasta1 = Constants.PICOYPLACAHORA[1]
-            val desde2 = Constants.PICOYPLACAHORA[2]
-            val hasta2 = Constants.PICOYPLACAHORA[3]
-            //we decide if there is a contravention
-            var last = plate!!.takeLast(1)
-            var contravention = false
-            Log.e("viewmodel",toString())
-            if(Constants.PICOYPLACADIA[calendarInstance.time.day-1].contains(last.toInt())){
-                if(
-                    (hasta1 > desde1 && hour >= desde1 && hour <= hasta1 || hasta1 < desde1 && (hour >= desde1 || hour <= hasta1)) ||
-                    (hasta2 > desde2 && hour >= desde2 && hour <= hasta2 || hasta1 < desde2 && (hour >= desde1 || hour <= hasta2)) ){
-                    contravention = true
+            Coroutines.io {
+                var list = listOf<Busqueda>()
+                if (!description.isNullOrEmpty()) {
+                    if(description!!.matches(regexPlate)){
+                        list = getBusquedaByDescription(description!!)
+                    }else {
+                        buscarListener!!.onError(R.string.campos_incorrectos)
+                    }
+
+                }
+                if (!plate.isNullOrEmpty()) {
+                    if(plate!!.matches(regexPlate)){
+                        list = getBusquedaByDescription(plate!!)
+                    }else {
+                        buscarListener!!.onError(R.string.campos_incorrectos)
+                    }
+
+                }
+                //filteredSearch.add(busqueda)
+                filteredSearch.addAll(list)
+                Coroutines.main{
+                    buscarListener!!.onSucces(plate!!)
                 }
             }
-            var busqueda = Busqueda(calendarInstance.timeInMillis,plate!!.toUpperCase(),contravention)
+        }
+    }
+
+    /**
+     * we look for a code or a description
+     */
+    fun agregar(view: View){
+        //we clear our filtered search so we dont get duplicates
+
+        //some validation
+        if (plate.isNullOrEmpty()&& description.isNullOrEmpty()){
+            buscarListener!!.onError(R.string.campos_vacios)
+        }else if(!plate!!.matches(regexPlate)&&!description!!.matches(regexPlate)){
+            buscarListener!!.onError(R.string.campos_incorrectos)
+        }else{
+
+            var busqueda = Busqueda(plate!!.toUpperCase(), description!!)
             Coroutines.io {
                 //we save the search also we update the view
                 saveBusquedas(listOf(busqueda))

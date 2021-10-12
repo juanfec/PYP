@@ -8,11 +8,11 @@
     <fragment
         android:id="@+id/buscar"
         android:name="com.juanfe.pyp.ui.buscar.Buscar"
-        tools:layout="@layout/buscar_fragment"
-        android:label="@string/buscar"/>
+        android:label="@string/agregar"
+        tools:layout="@layout/buscar_fragment" />
     <fragment
         android:id="@+id/bitacora"
         android:name="com.juanfe.pyp.ui.bitacora.Bitacora"
-        android:label="@string/bitacora"
+        android:label="@string/EditarBorrar"
         tools:layout="@layout/bitacora_fragment" />
 </navigation>

@@ -19,70 +19,60 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/number_of_contraventions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="0"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/contravencion_item"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/placa_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/placa"
+                android:text="@string/codigo"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/fecha_item"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/fecha_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/fecha"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/placa_item"
                 app:layout_constraintEnd_toStartOf="@+id/contravencion_item"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/placa_item"
-                app:layout_constraintTop_toTopOf="@+id/placa_item" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/contravencion_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="@string/contravencion"
+                android:text="@string/descripcion"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/fecha_item"
+                app:layout_constraintBottom_toBottomOf="@+id/placa_item"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/fecha_item"
-                app:layout_constraintTop_toTopOf="@+id/fecha_item" />
+                app:layout_constraintStart_toEndOf="@+id/placa_item"
+                app:layout_constraintTop_toTopOf="@+id/placa_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
-            android:id="@+id/plate"
+            android:id="@+id/codigoAgregar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
             android:ems="10"
-            android:hint="@string/hint_placa"
+            android:hint="@string/codigo"
             android:inputType="textPersonName"
             android:text="@={viewmodel.plate}"
+            app:layout_constraintBottom_toTopOf="@+id/descripcionAgregar"
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/descripcionAgregar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:ems="10"
+            android:hint="@string/descripcion"
+            android:inputType="textPersonName"
+            android:text="@={viewmodel.description}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintHorizontal_bias="0.5"
@@ -92,14 +82,29 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{ viewmodel::agregar }"
+            android:text="@string/agregar"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/codigoAgregar"
+            app:layout_constraintTop_toTopOf="@+id/codigoAgregar" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="@string/buscar"
             android:onClick="@{ viewmodel::buscar }"
+            android:text="@string/buscar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/plate" />
+            app:layout_constraintStart_toEndOf="@+id/codigoAgregar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/buscar_recycler"
@@ -107,7 +112,7 @@
             tools:listitem="@layout/buscar_item"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/plate"
+            app:layout_constraintBottom_toTopOf="@+id/codigoAgregar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />

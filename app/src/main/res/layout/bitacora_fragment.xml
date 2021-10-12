@@ -20,38 +20,25 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="183dp"
             android:layout_marginBottom="8dp"
-            android:text="@string/placa"
+            android:text="@string/codigo"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/fecha_item"
+            app:layout_constraintEnd_toStartOf="@+id/contravencion_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/fecha_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fecha"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/placa_item"
-            app:layout_constraintEnd_toStartOf="@+id/contravencion_item"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/placa_item"
-            app:layout_constraintTop_toTopOf="@+id/placa_item" />
 
         <TextView
             android:id="@+id/contravencion_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:text="@string/contravencion"
+            android:text="@string/descripcion"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/fecha_item"
+            app:layout_constraintBottom_toBottomOf="@+id/placa_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/fecha_item"
-            app:layout_constraintTop_toTopOf="@+id/fecha_item" />
+            app:layout_constraintTop_toTopOf="@+id/placa_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

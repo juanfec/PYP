@@ -32,17 +32,7 @@ class RecyclerBitacoraAdapter(private val busquedas: List<Busqueda>) : RecyclerV
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(busqueda: Busqueda)= with(itemView) {
             placa_item.text = busqueda.plate
-            var date = Date(busqueda.date)
-            val pattern = "dd-MM-yyyy"
-            val simpleDateFormat = SimpleDateFormat(pattern)
-            fecha_item.text = simpleDateFormat.format(date)
-            if(busqueda.contravention){
-                contravencion_item.text = resources.getString(R.string.si)
-                contravencion_item.setTextColor(resources.getColor(R.color.colorAccent))
-            }else{
-                contravencion_item.text = resources.getString(R.string.no)
-                contravencion_item.setTextColor(resources.getColor(R.color.colorPrimary))
-            }
+            fecha_item.text = busqueda.descripcion
         }
     }
 
