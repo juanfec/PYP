@@ -26,8 +26,12 @@ class BitacoraViewModel(var appDatabase: AppDatabase) : ViewModel() {
         }
     }
 
-    fun editarLista(list: List<Busqueda>){
+    suspend fun editarLista(list: List<Busqueda>){
         appDatabase.getBusquedaDao().insertOrUpdate(list)
+    }
+
+    suspend fun borrarItem(plate: String):Int {
+        return appDatabase.getBusquedaDao().deleteBusquedaByPlate(plate)
     }
 
     fun editar(view: View){
@@ -35,13 +39,30 @@ class BitacoraViewModel(var appDatabase: AppDatabase) : ViewModel() {
         if(codigo.isNullOrEmpty()){
             buscarListener!!.onError(R.string.campos_vacios)
         }else{
-            editarLista(listOf(Busqueda(codigo!!,description!!)))
+            Coroutines.io {
+                editarLista(listOf(Busqueda(codigo!!, description!!)))
+                Coroutines.main {
+                    buscarListener!!.onSucces(codigo!!)
+                }
+            }
         }
 
     }
 
     fun borrar(view: View){
         //we clear our filtered search so we dont get duplicates
-
+        if(codigo.isNullOrEmpty()){
+            buscarListener!!.onError(R.string.campos_vacios)
+        }else{
+            Coroutines.io {
+                var number : Int = borrarItem(codigo!!)
+                Coroutines.main {
+                    if (number>0){
+                        buscarListener!!.onError(R.string.noExiste)
+                    }
+                    buscarListener!!.onSucces(codigo!!)
+                }
+            }
+        }
     }
 }

@@ -94,19 +94,21 @@ class BuscarViewModel(var database: AppDatabase) : ViewModel() {
         //some validation
         if (plate.isNullOrEmpty()&& description.isNullOrEmpty()){
             buscarListener!!.onError(R.string.campos_vacios)
-        }else if(!plate!!.matches(regexPlate)&&!description!!.matches(regexPlate)){
-            buscarListener!!.onError(R.string.campos_incorrectos)
-        }else{
+        }else {
+            if(!plate!!.matches(regexPlate)&&!description!!.matches(regexPlate)){
+                buscarListener!!.onError(R.string.campos_incorrectos)
+            }else{
 
-            var busqueda = Busqueda(plate!!.toUpperCase(), description!!)
-            Coroutines.io {
-                //we save the search also we update the view
-                saveBusquedas(listOf(busqueda))
-                //filteredSearch.add(busqueda)
-                var list = getBusquedasByPlate(busqueda.plate)
-                filteredSearch.addAll(list)
-                Coroutines.main{
-                    buscarListener!!.onSucces(plate!!)
+                var busqueda = Busqueda(plate!!.toUpperCase(), description!!)
+                Coroutines.io {
+                    //we save the search also we update the view
+                    saveBusquedas(listOf(busqueda))
+                    //filteredSearch.add(busqueda)
+                    var list = getBusquedasByPlate(busqueda.plate)
+                    filteredSearch.addAll(list)
+                    Coroutines.main{
+                        buscarListener!!.onSucces(plate!!)
+                    }
                 }
             }
         }

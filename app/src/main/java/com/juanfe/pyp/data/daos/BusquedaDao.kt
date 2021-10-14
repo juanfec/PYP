@@ -1,10 +1,7 @@
 package com.juanfe.pyp.data.daos
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.juanfe.pyp.data.models.Busqueda
 
 @Dao
@@ -21,4 +18,7 @@ interface BusquedaDao {
 
     @Query("SELECT * FROM busqueda WHERE descripcion LIKE '%' || :description || '%'")
     fun getBusquedasByDescription(description: String): MutableList<Busqueda>
+
+    @Query("DELETE FROM busqueda WHERE plate = :plate")
+    fun deleteBusquedaByPlate(plate: String): Int
 }

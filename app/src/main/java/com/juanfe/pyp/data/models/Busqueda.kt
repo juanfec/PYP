@@ -5,10 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "busqueda")
 data class Busqueda(
-    var plate: String,
+    @PrimaryKey var plate: String,
     var descripcion: String
 ){
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
     constructor(): this("", "")
 }
